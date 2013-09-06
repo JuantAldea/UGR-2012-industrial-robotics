@@ -1,0 +1,217 @@
+% !TeX spellcheck = es_ES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrreprt} % A4 paper and 11pt font size
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{sectsty} % Allows customizing section commands
+
+\usepackage[pdftex]{graphicx}
+
+\usepackage{listings}
+
+\usepackage{calc}
+
+\usepackage{appendix}
+
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+\usepackage{float}
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\newlength{\imgwidth}
+
+\makeatletter
+\def\ScaleIfNeeded{%
+    \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+    \else
+    \Gin@nat@width
+    \fi
+}
+\makeatother
+
+% Resize figures that are too wide for the page.
+\let\oldincludegraphics\includegraphics
+
+\renewcommand\includegraphics[2][]{%
+    \oldincludegraphics[width=\ScaleIfNeeded]{#2}
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{
+    \normalfont \normalsize 
+    \textsc{Robótica Industrial} \\ [25pt] % Your university, school and/or department name(s)
+    \horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+    \huge Práctica 2: Cinemática: Método de Denavit-Hartenberg \\ % The assignment title
+    \horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Juan Antonio Aldea Armenteros}
+
+\date{\normalsize\today}
+
+\begin{document}
+    \maketitle
+    \chapter{Ejercicio entregado en papel}
+    Determinar los parámetros del método de D-H para el robot de la figura.
+    \begin{figure}[H]
+        \centering
+        \oldincludegraphics[width=9cm]{./imagenes/dh-papel.png}
+        \caption{Robot}
+    \end{figure}
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c||c|c|c|c|}
+            \hline
+            Articulación & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
+            \hline
+            \hline
+            1 & $\theta_1$ & $0$ & $0$ & $-\frac{\pi}{2}$ \\
+            \hline
+            2 & $\theta_2$ & $l_1$ & $0$ & $\frac{\pi}{2}$ \\
+            \hline
+            3 & $\theta_3 - \frac{\pi}{2}$ & $0$ & $-l_2$ & $\frac{\pi}{2}$ \\
+            \hline
+            4 & $\theta_4$ & $l_3$ & $0$ & $-\frac{\pi}{2}$ \\
+            \hline
+            5 & $\theta_5$ & $0$ & $0$ & $\frac{\pi}{2}$ \\
+            \hline
+            6 & $\theta_6$ & $l_4$ & $0$ & $0$ \\
+            \hline
+        \end{tabular}
+        \caption {Parámetros D-H calculados}
+    \end{table}
+    \newpage
+    \chapter{Robot Bípedo}
+        \begin{figure}[H]
+            \centering
+            \oldincludegraphics[width=4cm]{./imagenes/bipedo.png}
+            \caption{Robot bípedo}
+        \end{figure}
+        Dado que el robot es simétrico solo es necesario calcular completamente los parámetros de una de las cadenas, pues se diferencian únicamente en una traslación y evidentemente en las variables que representan los grados de libertad, que son las correspondientes a cada cadena, de cualquier manera se incluyen las dos tablas.
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c||c|c|c|c|}
+            \hline
+            Art. & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
+            \hline
+            \hline
+            1 & $\theta_1 + \frac{\pi}{2}$ & $0$ & $0$ & $\frac{\pi}{2}$ \\
+            \hline
+            2 & $\theta_2$ & $0$ & $-l_{12}$ & $-\frac{\pi}{2}$ \\
+            \hline
+            3 & $\theta_3 - \frac{\pi}{2}$ & $-l_{23}$ & $0$ & $-\frac{\pi}{2}$ \\
+            \hline
+            11 & $\theta_11 + \frac{\pi}{2}$ & $-l_{34}$ & $0$ & $\frac{\pi}{2}$ \\
+            \hline
+            12 & $\theta_12 - \frac{\pi}{2}$ & $0$ & $l_{45}$ & $\frac{\pi}{2}$ \\
+            \hline
+            13 & $\theta_13$ & $0$ & $l_{56}$ & $0$ \\
+            \hline
+            14 & $\theta_14$ & $0$ & $l_{67}$ & $0$ \\
+            \hline
+            15 & $\theta_15$ & $0$ & $l_{78}$ & $-\frac{\pi}{2}$ \\
+            \hline
+            16 & $\theta_16$ & $0$ & $l_{89}$ & $0$ \\
+            \hline
+        \end{tabular}
+        \begin{tabular}{|c||c|c|c|c|}
+            \hline
+            Art. & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
+            \hline
+            \hline
+            1 & $\theta_1 + \frac{\pi}{2}$ & $0$ & $0$ & $\frac{\pi}{2}$ \\
+            \hline
+            2 & $\theta_2$ & $0$ & $-l_{12}$ & $-\frac{\pi}{2}$ \\
+            \hline
+            3 & $\theta_3 - \frac{\pi}{2}$ & $-l_{23}$ & $0$ & $-\frac{\pi}{2}$ \\
+            \hline
+            4 & $\theta_4 + \frac{\pi}{2}$ & $-l_{34}$ & $0$ & $\frac{\pi}{2}$ \\
+            \hline
+            5 & $\theta_5 - \frac{\pi}{2}$ & $0$ & $l_{45}$ & $\frac{\pi}{2}$ \\
+            \hline
+            6 & $\theta_6$ & $0$ & $l_{56}$ & $0$ \\
+            \hline
+            7 & $\theta_7$ & $0$ & $l_{67}$ & $0$ \\
+            \hline
+            8 & $\theta_8$ & $0$ & $l_{78}$ & $-\frac{\pi}{2}$ \\
+            \hline
+            9 & $\theta_9$ & $0$ & $l_{89}$ & $0$ \\
+            \hline
+        \end{tabular}
+        \caption {Parámetros D-H piernas (izquierda y derecha).}
+    \end{table}
+    \newpage
+    \chapter{Robot Puma}
+    \begin{figure}[H]
+        \centering
+        \oldincludegraphics[width=11cm]{./imagenes/puma.png}
+        \caption{Robot PUMA con los ejes de coordenadas del método D-H}
+    \end{figure}
+    Teniendo en cuenta que el ángulo $\theta_i$ es la rotación sobre el eje $Z_{i-1}, 1 \leq i \leq 5$
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{|c||c|c|c|c|}
+            \hline
+            Art. & $\theta_i$ & $d_i$ & $a_i$ & $\alpha_i$ \\
+            \hline
+            \hline
+            1 & $\theta_1$ & $13$ & $0$ & $-\frac{\pi}{2}$ \\
+            \hline
+            2 & $\theta_2$ & $0$ & $8$ & $0$ \\
+            \hline
+            3 & $\theta_3 - \frac{\pi}{2}$ & $-l$ & $0$ & $-\frac{\pi}{2}$ \\
+            \hline
+            4 & $\theta_4 + \pi$ & $8$ & $0$ & $-\frac{\pi}{2}$ \\
+            \hline
+            5 & $\theta_5 - \frac{\pi}{2}$ & $0$ & $0$ & $\frac{\pi}{2}$ \\
+            \hline
+            6 & $0$ & $t$ & $0$ & $0$ \\
+            \hline
+        \end{tabular}
+        \caption {Parámetros D-H robot PUMA.}
+    \end{table}
+\end{document}

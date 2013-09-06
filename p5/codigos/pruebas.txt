@@ -1,0 +1,30 @@
+global xv i yv ang
+dimpa za[90]
+
+program calc
+set ang=-4
+for i=1 to 90
+	set ang=ang+4
+	set xv=500 cos ang
+	set yv=500 sin ang
+	set xv=xv+4000
+	here za[i]
+	setpvc za[i] x xv
+	setpvc za[i] y yv
+	setpvc za[i] z 500
+	setpvc za[i] p -900
+	setpvc za[i] r 0
+	delay 1
+	print i
+endfor
+println "vector v creado"
+end
+
+program circ
+speed 25
+moved za[1]
+mprofile trapeze
+label 1
+moves za 1 90
+goto 1
+end

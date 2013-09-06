@@ -1,0 +1,23 @@
+program circu
+  set yv = -2600
+  set paso = 360/50;
+  for i = 1 to 50
+  set ang = i * paso
+  set c = 5 COS ang
+  set s = 5 SIN ang
+  set yv = 400  + s
+  set xv = 400 + c
+  set zv = 5039
+  here v[i]
+  setpvc v[i] x xv
+  setpvc v[i] y yv
+  setpvc v[i] z zv
+  setpvc v[i] p -869
+  setpvc v[i] r -1
+  delay 1
+  print i
+  endfor
+  println "vector v creado"
+end
+
+

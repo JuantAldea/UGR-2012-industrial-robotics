@@ -1,0 +1,167 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+% !TeX spellcheck = es_ES
+\documentclass[paper=a4, fontsize=11pt]{scrreprt} % A4 paper and 11pt font size
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{cleveref}
+
+\usepackage[pdftex]{graphicx}
+
+\usepackage{listings}
+
+\usepackage{calc}
+
+\usepackage{appendix}
+
+\newlength{\imgwidth}
+
+\newcommand\scalegraphics[1]{
+    \settowidth{\imgwidth}{\includegraphics{#1}}
+    \setlength{\imgwidth}{\minof{\imgwidth}{\textwidth}}
+    \includegraphics[width=\imgwidth]{#1}
+}
+
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+\usepackage{float}
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\def\ScaleIfNeeded{
+    \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+    \else
+    \Gin@nat@width
+    \fi
+}
+
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0, 0.4, 0.0}
+
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}
+\lstset{language=Matlab,                        % Use MATLAB
+    columns=fullflexible,
+    frame=single,                           % Single frame around code
+    basicstyle=\tiny\ttfamily,             % Use small true type font
+    keywordstyle=[1]\color{Blue}\bf,        % MATLAB functions bold and blue
+    keywordstyle=[2]\color{Purple},         % MATLAB function arguments purple
+    keywordstyle=[3]\color{Blue}\underbar,  % User functions underlined and blue
+    identifierstyle=,                       % Nothing special about identifiers
+    % Comments small dark green courier
+    commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+    stringstyle=\color{Purple},             % Strings are purple
+    showstringspaces=false,                 % Don't put marks in string spaces
+    tabsize=3,                              % 5 spaces per tab
+    %
+    %%% Put standard MATLAB functions not included in the default
+    %%% language here
+    morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+    %
+    %%% Put MATLAB function parameters here
+    morekeywords=[2]{on, off, interp},
+    %
+    %%% Put user defined functions here
+    morekeywords=[3]{},
+    %
+    morecomment=[l][\color{Blue}]{...},     % Line continuation (...) like blue comment
+    numbers=left,                           % Line numbers on left
+    firstnumber=1,                          % Line numbers start with line 1
+    numberstyle=\tiny\color{Blue},          % Line numbers are blue
+    stepnumber=1                            % Line numbers go in steps of 5
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{
+    \normalfont \normalsize 
+    \textsc{Robótica Industrial} \\ [25pt] % Your university, school and/or department name(s)
+    \horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+    \huge Práctica 3: Planificación de la trayectoria del manipulador RR \\ % The assignment title
+    \horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Juan Antonio Aldea Armenteros} % Your name
+
+\date{\normalsize\today}
+
+\begin{document}
+    
+    \maketitle % Print the title
+    \chapter{Simulación}
+    \section{Trayectoria completa}
+        \begin{figure}[H]
+            \centering
+            \scalegraphics{imagenes/trayectoria.png}
+            \caption{Trayectoria Simulada.}
+        \end{figure}
+        La animación puede verse \href{http://youtu.be/kM_YMi76RJk}{aquí}.
+    \section{Características temporales}
+        \begin{figure}
+            \centering
+            \scalegraphics{imagenes/graficos_th1.png}
+            \caption{Características temporales de $\theta_1(t)$}
+            \label{f:2}
+        \end{figure}
+        \begin{figure}
+            \centering
+            \scalegraphics{imagenes/graficos_th2.png}
+            \caption{Características temporales de $\theta_2(t)$}
+            \label{f:3}
+        \end{figure}
+        Como puede apreciarse en las figuras \ref{f:2} y \ref{f:3} las condiciones de contorno impuestas se cumplen, continuidad en la posición, en la velocidad y en la aceleración (es decir, $\theta_1(t), \theta_2(t) \in C^3$). Dado que no se han impuesto condiciones sobre la derivada de la aceleración (\href{http://en.wikipedia.org/wiki/Jerk_\%28physics\%29}{jerk}) se pueden apreciar cambios muy bruscos en esta (es continua pero no derivable), esto implica que esta trayectoria no es apta para ser usada en una máquina real, los cambios bruscos en la aceleración provocarían un gran estrés y desgaste en los motores del robot, acortando su vida útil en el mejor de los casos; es por esto que sería conveniente llevar la suavidad incluso más allá de la tercera derivada (jerk), hasta la cuarta, el \href{http://en.wikipedia.org/wiki/Jounce}{jounce}.
+    \part*{Apéndices}
+    \appendix
+    \chapter{Código Matlab utilizado}
+    \lstinputlisting[language=Matlab, caption = Problema cinemático inverso.]{matlab/pci.m}
+    \lstinputlisting[language=Matlab, caption = Problema cinemático directo.]{matlab/pcd.m}
+    \lstinputlisting[language=Matlab, caption = Manipulador RR.]{matlab/robot.m}
+    \newpage
+    \lstinputlisting[language=Matlab, caption = Cálculo de los ángulos de la trayectoria de cada articulación.]{matlab/calcular_angulos.m}
+    \lstinputlisting[language=Matlab, caption = Cálculo de los valores del ángulo de una articulación.]{matlab/calcular_angulo.m}
+    \lstinputlisting[language=Matlab, caption = Script principal.]{matlab/trayectoria.m}
+\end{document}

@@ -1,0 +1,9 @@
+program parab
+speed 25
+moved v[1]
+mprofile trapeze
+label 1
+moves v 1 50
+moves v 50 1
+goto 1
+end

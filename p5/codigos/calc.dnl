@@ -1,0 +1,19 @@
+program calc
+  set yv = -2600
+  for i = 1 to 50
+    set yv = yv + 100;
+    set zv = yv*yv;
+    set zv = zv/5000;
+    set zv = zv + 1000;
+    here v[i];
+    setpvc v[i] x 3000
+    setpvc v[i] y yv
+    setpvc v[i] z zv
+    setpvc v[i] p -900
+    setpvc v[i] r 0
+    delay 1
+    print i
+  endfor
+  println "vector v creado"
+end
+

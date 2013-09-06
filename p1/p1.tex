@@ -1,0 +1,191 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+% !TeX spellcheck = es_ES
+\documentclass[paper=a4, fontsize=11pt]{scrreprt} % A4 paper and 11pt font size
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{sectsty} % Allows customizing section commands
+
+\usepackage[pdftex]{graphicx}
+
+\usepackage{listings}
+
+\usepackage{calc}
+
+\usepackage{appendix}
+\usepackage{hyperref}
+\newlength{\imgwidth}
+
+\newcommand\scalegraphics[1]{
+    \settowidth{\imgwidth}{\includegraphics{#1}}
+    \setlength{\imgwidth}{\minof{\imgwidth}{\textwidth}}
+    \includegraphics[width=\imgwidth]{#1}
+}
+
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+\usepackage{float}
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+\def\ScaleIfNeeded{
+    \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+    \else
+    \Gin@nat@width
+    \fi
+}
+
+
+\usepackage[usenames,dvipsnames]{color}
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}
+\lstset{language=Matlab,                        % Use MATLAB
+    columns=fullflexible,
+    frame=single,                           % Single frame around code
+    basicstyle=\small\ttfamily,             % Use small true type font
+    keywordstyle=[1]\color{Blue}\bf,        % MATLAB functions bold and blue
+    keywordstyle=[2]\color{Purple},         % MATLAB function arguments purple
+    keywordstyle=[3]\color{Blue}\underbar,  % User functions underlined and blue
+    identifierstyle=,                       % Nothing special about identifiers
+    % Comments small dark green courier
+    commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+    stringstyle=\color{Purple},             % Strings are purple
+    showstringspaces=false,                 % Don't put marks in string spaces
+    tabsize=3,                              % 5 spaces per tab
+    %
+    %%% Put standard MATLAB functions not included in the default
+    %%% language here
+    morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+    %
+    %%% Put MATLAB function parameters here
+    morekeywords=[2]{on, off, interp},
+    %
+    %%% Put user defined functions here
+    morekeywords=[3]{},
+    %
+    morecomment=[l][\color{Blue}]{...},     % Line continuation (...) like blue comment
+    numbers=left,                           % Line numbers on left
+    firstnumber=1,                          % Line numbers start with line 1
+    numberstyle=\tiny\color{Blue},          % Line numbers are blue
+    stepnumber=1                            % Line numbers go in steps of 5    fullflexible
+}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{
+    \normalfont \normalsize 
+    \textsc{Robótica Industrial} \\ [25pt] % Your university, school and/or department name(s)
+    \horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+    \huge Práctica 1:Introducción a Matlab, Análisis cinemático del manipulador RR \\ % The assignment title
+    \horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Juan Antonio Aldea Armenteros} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+    \maketitle
+    \chapter{Problema Cinemático Directo}
+    El problema cinemático directo consiste en determinar, a partir de las variables de las articulaciones, la posición del efector final en el espacio.
+    Un video de la simulación puede verse \href{http://youtu.be/QZf1Gd5Ehr0}{aquí}.
+
+    \section{Problema Cinemático Inverso}
+    Este problema consiste en determinar las variables de articulación a partir del punto del espacio que se desea alcanzar con el robot. En esta práctica las variables de articulación están expresadas como ángulos, esto lleva consigo muchos problemas de continuidad como ya se avisa en el enunciado, sería mucho más conveniente expresarlos mediante  \href{http://en.wikipedia.org/wiki/Quaternion}{cuaterniones} cuya interpolación, composición y operatoria en general es mucho más homogénea y estable que las equivalentes con ángulos de Euler.
+    Un video de la simulación de las trayectorias indicadas en el enunciado puede verse \href{http://youtu.be/x5fxrR2QUQg}{aquí}.
+    \subsection{Características temporales de las trayectorias}
+    A la vista de las representaciones de las derivadas de las trayectorias podemos concluir que:
+    \begin{itemize}
+        \item Primera trayectoria \ref{f:1} y \ref{f:2}, es bastante suave, sin embargo tiene unas zonas con una gran pendiente, no son aptas para ser usadas en una máquina real.
+        \item Segunda trayectoria \ref{f:3} y \ref{f:4}, es mucho más suave que la anterior, también tiene zonas de gran cambio (esto es relativo a la vista de los órdenes de magnitud) pero los cambios son suaves.
+        \item Tercera trayectoria \ref{f:5} y \ref{f:6}, es realmente buena, todas las variaciones son muy suaves y los órdenes de magnitud de estas son pequeños. 
+    \end{itemize}
+    \begin{figure}
+        \scalegraphics{imagenes/trayectoria-1-th1.png}
+        \caption{Trayectoria 1, $\theta_1(t)$.}
+        \label{f:1}
+    \end{figure}
+    \begin{figure}
+        \scalegraphics{imagenes/trayectoria-1-th2.png}
+        \caption{Trayectoria 1, $\theta_2(t)$.}
+        \label{f:2}
+    \end{figure}
+    
+    \begin{figure}
+        \scalegraphics{imagenes/trayectoria-2-th1.png}
+        \caption{Trayectoria 2, $\theta_1(t)$.}
+        \label{f:3}
+    \end{figure}
+    \begin{figure}
+        \scalegraphics{imagenes/trayectoria-2-th2.png}
+        \caption{Trayectoria 2, $\theta_2(t)$.}
+        \label{f:4}
+    \end{figure}
+    
+    \begin{figure}
+        \scalegraphics{imagenes/trayectoria-3-th1.png}
+        \caption{Trayectoria 3, $\theta_1(t)$.}
+        \label{f:5}
+    \end{figure}
+    
+    \begin{figure}
+        \scalegraphics{imagenes/trayectoria-3-th2.png}
+        \caption{Trayectoria 3, $\theta_2(t)$.}
+        \label{f:6}
+    \end{figure}
+    
+    \part*{Apéndices}
+    \appendix
+    \chapter{Código Matlab utilizado}
+    \lstinputlisting[language=Matlab, caption = PCD]{matlab/pcd.m}
+    \lstinputlisting[language=Matlab, caption = PCI]{matlab/pci.m}
+    \lstinputlisting[language=Matlab, caption = Trayectoria PCI]{matlab/trayectoria_pci.m}
+    \lstinputlisting[language=Matlab, caption = Trayectoria PCD]{matlab/trayectoria_pcd.m}
+    \lstinputlisting[language=Matlab, caption = Script PCI]{matlab/script_pci.m}
+    
+\end{document}

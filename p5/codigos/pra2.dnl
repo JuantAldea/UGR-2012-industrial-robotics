@@ -1,0 +1,32 @@
+global xv i zv 
+dimpa v[50]
+
+program circulo
+moved home
+set zv = 3500 
+for i=1 to 50
+	set zv = zv + 20
+	set xv = zv * zv
+	set xv = 2500 - xv
+	set xv = sqrt xv
+	here v[i] 
+	setpvc v[i] x xv 
+	setpvc v[i] y 0
+	setpvc v[i] z zv
+	setpvc v[i] p 0 
+	setpvc v[i] r 0 
+	delay 1
+	print i
+endfor
+println "vector v creado"
+end
+
+program movi
+speed 25 
+moved v[1] 
+mprofile trapeze 
+label 1
+moves v 1 50 
+moves v 50 1
+goto 1
+end
